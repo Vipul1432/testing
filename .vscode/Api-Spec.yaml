@@ -1,0 +1,56 @@
+swagger: "2.0"
+info:
+  description: Distance Calculation Function API
+  version: 1.0.0
+  title: Distance Calculation API
+host: your-cloud-function-url
+basePath: /v1
+schemes:
+  - https
+security:
+  - api_key: []
+x-google-backend:
+  address: >-
+    https://your-region-your-project.cloudfunctions.net/your-function-name
+x-google-management:
+  metrics:
+    - name: "post-requests"
+      displayName: "post requests"
+      valueType: INT64
+      metricKind: DELTA
+paths:
+  /DistanceCalculation:
+    post:
+      tags:
+        - Distance Calculation
+      summary: Calculate distance based on Excel file
+      operationId: calculateDistance
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                excelFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+        "405":
+          description: Method Not Allowed
+          content:
+            text/plain:
+              schema:
+                type: string
